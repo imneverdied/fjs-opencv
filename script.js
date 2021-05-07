@@ -58,8 +58,8 @@ function BW() {
 }
 
 function Canny() {
-  var src = cv.imread(srcImgEl); // load the image from <img>
-  var dst = new cv.Mat();
+  let src = cv.imread(imgsrc); // load the image from <img>
+  let dst = new cv.Mat();
 
   cv.cvtColor(src, src, cv.COLOR_RGB2GRAY, 0);
 
