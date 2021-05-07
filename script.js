@@ -1,4 +1,4 @@
-var srcImgEl = document.getElementById('src-image');
+var srcImgEl = document.getElementById('srcimage');
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 (function() {
@@ -36,7 +36,7 @@ function onOpenCvReady() {
 function srcC() {
   let PICsrc = document.getElementById('imgsrc').value;
   alert(PICsrc);
-  srcImgEl.src = PICsrc;
+  srcimage.src = PICsrc;
 }
 
 function BW() {
@@ -55,4 +55,21 @@ function BW() {
   }
   ctx.putImageData(imageData, 0, 0);
   BWimage.src = canvas.toDataURL();
+}
+
+function Canny() {
+  var src = cv.imread(srcImgEl); // load the image from <img>
+  var dst = new cv.Mat();
+
+  cv.cvtColor(src, src, cv.COLOR_RGB2GRAY, 0);
+
+  cv.Canny(src, dst, 50, 100, 3, false); // You can try more different parameters
+
+  cv.imshow('canvas', dst); // display the output to canvas
+
+  src.delete(); // remember to free the memory
+  dst.delete();
+
+  Oimage.src = canvas.toDataURL();
+  BW();
 }
