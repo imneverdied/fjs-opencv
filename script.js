@@ -1,4 +1,5 @@
 var srcImgEl = document.getElementById('srcimage');
+//取得跨域圖片/get Cross-Origin Resource Sharing (CORS) picture
 srcImgEl.crossOrigin = 'anonymous';
 Oimage.crossOrigin = 'anonymous';
 BWimage.crossOrigin = 'anonymous';
@@ -19,19 +20,14 @@ var ctx = canvas.getContext('2d');
   srcImgEl.onload = function() {
     var src = cv.imread(srcImgEl); // load the image from <img>
     var dst = new cv.Mat();
-
     cv.cvtColor(src, src, cv.COLOR_RGB2GRAY, 0);
-
     cv.Canny(src, dst, 50, 100, 3, false); // You can try more different parameters
-
     cv.imshow('canvas', dst); // display the output to canvas
-
     src.delete(); // remember to free the memory
     dst.delete();
-
-    Oimage.src = canvas.toDataURL();
-    BW();
-    ADD();
+    Oimage.src = canvas.toDataURL(); //Canny邊緣偵測
+    BW(); //Canny黑白反轉
+    ADD(); //邊緣疊加
   };
 })();
 // opencv  載入成功判斷
@@ -39,6 +35,7 @@ function onOpenCvReady() {
   document.getElementById('loading').remove();
 }
 function srcC() {
+  //讀取intput src 更新/input src update
   let PICsrc = document.getElementById('imgsrc').value;
   alert(PICsrc);
   srcimage.src = PICsrc;
@@ -100,6 +97,7 @@ function ADD() {
 
   for (var i = 0; i < data.length; i += 4) {
     var avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+    //在原圖蓋上Canny圖
     if (parseInt(avg) == 0) {
       data[i] = 0; // red
       data[i + 1] = 255; // green
