@@ -27,6 +27,7 @@ var ctx = canvas.getContext('2d');
 
     Oimage.src = canvas.toDataURL();
     BW();
+    ADD();
   };
 })();
 // opencv  載入成功判斷
@@ -72,4 +73,40 @@ function Canny() {
 
   Oimage.src = canvas.toDataURL();
   BW();
+}
+
+function ADD() {
+  let src = cv.imread(srcImgEl); // load the image from <img>
+  cv.imshow('canvasORG', src); // display the output to canvas
+  src.delete(); // remember to free the memory
+
+  var canvasORG = document.getElementById('canvasORG');
+  var ctxORG = canvasORG.getContext('2d');
+  const imageDataORG = ctxORG.getImageData(
+    0,
+    0,
+    canvasORG.width,
+    canvasORG.height
+  );
+  const dataORG = imageDataORG.data;
+  dataORG.src = srcimage.src;
+
+  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const data = imageData.data;
+
+  for (var i = 0; i < data.length; i += 4) {
+    var avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+    if (parseInt(avg) == 0) {
+      data[i] = 0; // red
+      data[i + 1] = 255; // green
+      data[i + 2] = 0; // blue
+    } else {
+      data[i] = dataORG[i]; // red
+      data[i + 1] = dataORG[i + 1]; // green
+      data[i + 2] = dataORG[i + 2]; // blue
+      //data[i + 3] = 0; // alpha
+    }
+  }
+  ctx.putImageData(imageData, 0, 0);
+  ADDimage.src = canvas.toDataURL();
 }
