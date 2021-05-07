@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <div>
+    <p id="loading">Loading...</p>
+    <input
+      id="imgsrc"
+      placeholder="image src"
+      onchange="srcC()"
+      style="width:70px"
+    />
+    <br />
+    <input type="file" id="file-upload" />
+  </div>
+
+  <div class="row-align">
+    <table>
+      <tr>
+        <td align="center">原圖</td>
+        <td align="center">Canny邊緣偵測</td>
+        <td align="center">Canny黑白反轉</td>
+      </tr>
+      <tr>
+        <td>
+          <img id="src-image" src="" alt="" />
+          <canvas id="canvas" width="300" style="display:none"></canvas>
+        </td>
+        <td>
+          <img id="Oimage" />
+        </td>
+        <td>
+          <img id="BWimage" />
+        </td>
+      </tr>
+    </table>
+  </div>
+</html>
+<script src="script.js"></script>
+<script
+  src="https://cdn.jsdelivr.net/gh/wallat/compiled-opencvjs/v4.2.0/opencv.js"
+  async
+  onload="onOpenCvReady();"
+  type="text/javascript"
+></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
